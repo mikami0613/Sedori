@@ -1,27 +1,45 @@
-﻿<Window x:Class="Sedori.LoginWindow"
+﻿<!--xmlns:xは、そのエレメント（ここではwindow）をコードビハインドで継承することによって、このxamlが使えるようになるらしい-->
+<!--WidthAndHeight便利　いい感じにサイズ変えてくれる。-->
+<Window x:Class="Sedori.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sedori"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="204" Width="312">
-    <Grid Margin="0,0,0,2">
+        Title="LoginWindow" SizeToContent="WidthAndHeight">
+    
+    <Grid Margin="10">
+        <!--管理がしやすくなるように-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="111*"/>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="190"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock HorizontalAlignment="Left" Margin="40,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" Grid.ColumnSpan="3"><Run Language="ja-jp" Text="ID"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="40,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="83" Grid.ColumnSpan="3"><Run Text="I"/><Run Language="ja-jp" Text="D"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="40,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Height="17"><Run Language="ja-jp" Text="PASS"/></TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="ID" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyle}"/>
         <!--InputTextにはプロパティ名がくる。InputTextは、DataContextが持つ、ViewModelの中から選ばれることが多い。
         UpdateSourceTrigger=PropertyChangedはバインディングの更新タイミングを制御、これが
         なくても大して問題にならない。カーソルが離れた時に実行されるだけ。-->
-        <TextBox Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="101,33,0,0" TextWrapping="Wrap" 
-                 Background="{Binding TextBoxBackground}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="3" GotFocus="TextBox_GotFocus"/>
-        <PasswordBox HorizontalAlignment="Left" Margin="101,67,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="3"/>
-        <Button Content="Login" HorizontalAlignment="Left" Margin="110,106,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" Click="LoginButton_Click"/>
-        <Button Content="Register" HorizontalAlignment="Left" Margin="110,131,0,0" VerticalAlignment="Top" Width="51" Grid.Column="2" Click="RegisterButton_Click"/>
+        <TextBox Text="{Binding IdText, UpdateSourceTrigger=PropertyChanged}" 
+                 Background="{Binding TextBoxBackground}"
+                 Grid.Row="0" Grid.Column="1" 
+                 Style="{StaticResource InputStyle}"
+                 GotFocus="TextBox_GotFocus"/>
+        
+        <Label Content="PASS" Grid.Row="1" Grid.Column="0" Style="{StaticResource LabelStyle}"/>
+        <PasswordBox x:Name="PasswordBox" Background="{Binding PassBoxBackground}"
+                     Style="{StaticResource InputStyle}"
+                     Grid.Row="1" Grid.Column="1"
+                     GotFocus="PassBox_GotFocus" PasswordChanged="PasswordBox_PasswordChanged"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,10,0">
+            <Button Content="Login" Style="{StaticResource ButtonStyle}" Click="LoginButton_Click"/>
+            <Button Content="Register" Style="{StaticResource ButtonStyle}" Click="RegisterButton_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -35,14 +35,34 @@ namespace Sedori
             }
         }
 
+        private void PassBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (_loginWindowViewModel != null)
+            {
+                _loginWindowViewModel.PassBox_GotFocus(sender, e);
+            }
+        }
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.Print("デバッグ文を表示");
+            if (_loginWindowViewModel != null)
+            {
+                //パスワードとユーザーIDが合っていたら、の処理を入れる。
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            _loginWindowViewModel.SecurePassword = ((PasswordBox)sender).SecurePassword;
+ 
         }
     }
 }

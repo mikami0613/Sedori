@@ -5,8 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sedori"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1200">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- 検索ラベルと検索ウィンドウ -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="キーワード:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="SerchBox" Width="200" Height="25" VerticalAlignment="Center"/>
+            <Button x:Name="ReserchButton" Content="検索実行" Click="ReserchButton_Click" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Text="{Binding Status}" Margin="10"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2">
+            <ItemsControl ItemsSource="{Binding Products}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Bold"/>
+                                <TextBlock Grid.Column="1">
+                                    <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
+                                        製品ページ
+                                    </Hyperlink>
+                                </TextBlock>
+                                <TextBlock Grid.Column="2" Text="{Binding Description}" TextWrapping="Wrap"/>
+                                <Image Grid.Column="3" Width="200" Height="200" Stretch="Uniform" Source="{Binding ImageUrl}"/>
+                                <TextBlock Grid.Column="4" Text="{Binding Price, StringFormat={}{0:C}, ConverterCulture={StaticResource JapaneseCulture}}" />
+                                <TextBlock Grid.Column="5" Text="{Binding Points, StringFormat='{}{0} ポイント'}" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>
